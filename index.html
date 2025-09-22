@@ -1,0 +1,1355 @@
+import os
+import base64
+from jinja2 import Template
+
+# 将图片转换为base64编码
+def image_to_base64(image_path):
+    """将图片文件转换为base64编码的数据URL"""
+    try:
+        with open(image_path, "rb") as image_file:
+            encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
+            return f"data:image/jpeg;base64,{encoded_string}"
+    except FileNotFoundError:
+        print(f"警告: 无法找到图片文件 {image_path}")
+        return None
+
+# 定义页面数据（中英文合并）
+page_data = {
+    "zh": {
+        "title": "爆火的大女主剧，真的'大女主'吗？",
+        "sections": [
+            {
+                "id": "intro",
+                "title": "爆火的大女主剧，真的'大女主'吗？",
+                "content": """
+                    <p>&nbsp;</p>
+                    <p>近年来，随着女性议题的持续升温，<strong>以女性成长为核心的'大女主'剧在国产剧中不断走红</strong>。从《甄嬛传》《延禧攻略》到《我的前半生》《玫瑰的故事》，一批以女性为中心的作品相继播出，并在社交平台上掀起讨论热潮。</p>
+                    <p>然而，伴随热度而来的却是一个绕不开的问题：<strong>这些以"女性觉醒"为核心卖点的剧集，其中的女性关键人物，究竟是真正打破传统、展现自主意识的新女性形象，还是只是套上"大女主"标签的陈旧叙事？</strong></p>
+                    <p>通过对十部热门"大女主"剧的数据分析发现，在光鲜的名号背后，女性角色的叙事自主权或许并没有想象中那般强大。</p>
+                """
+            },
+            {
+                "id": "popularity",
+                "title": "大女主剧集数量激增，话题度持续升温",
+                "visualizations": [
+                    {
+                        "type": "flourish",
+                        "content": """
+                            <p>数据显示，<strong>自2010年以来，国内"大女主"剧集数量不断增加</strong>，至今已有超过<strong>50部</strong>相关剧集播出。尤其在2020年之后，该题材数量显著增长。</p>
+                        """,
+                        "embed_code": """
+                            <div class="flourish-embed flourish-chart" data-src="visualisation/25221254">
+                                <script src="https://public.flourish.studio/resources/embed.js"></script>
+                            </div>
+                        """
+                    },
+                    {
+                        "type": "image",
+                        "content": """
+                            <p>与此同时，<strong>微博、抖音、小红书等社交平台上，"大女主"标签的讨论度也呈指数级增长</strong>。据不完全统计，微博、抖音、小红书等平台上相关话题阅读量累计<strong>超过百亿次</strong>，证明了这一概念在观众心目中的受欢迎程度。</p>
+                        """,
+                        "image": image_to_base64("tag.jpg"),
+                        "alt": "'大女主'标签的社交媒体热度"
+                    }
+                ]
+            },
+            {
+                "id": "zhenhuan",
+                "title": "《甄嬛传》：'大女主'的现象级爆剧",
+                "content": """
+                    <div class="centered-text">
+                        <p>提到"大女主"剧，《甄嬛传》几乎是无法绕开的案例。2011年首播时，这部由郑晓龙执导、孙俪、陈建斌、蔡少芬等主演的电视剧迅速走红，并在十余年后依旧因网络热议而频繁"翻红"。</p>
+                        <p>在豆瓣，《甄嬛传》至今保持着<strong>9.3</strong>的高分，超过<strong>40万</strong>观众参与评分，使其成为公认的"大女主"经典之作。</p>
+                    </div>
+                """,
+                "visualizations": [
+                    {
+                        "type": "image",
+                        "content": """
+                            <div class="compact-text">
+                                <p>《甄嬛传》在豆瓣获得了极高的评分和大量的评论，成为现象级作品。</p>
+                            </div>
+                        """,
+                        "image": image_to_base64(r"甄嬛传豆瓣.png"),
+                        "alt": "《甄嬛传》豆瓣评分"
+                    }
+                ]
+            },
+            {
+                "id": "zhenhuan-question",
+                "title": "但是，《甄嬛传》真的'大女主'吗？",
+                "content": """
+                    <p>如果从数据的时间维度来观察，<strong>《甄嬛传》的口碑曲线其实并非一成不变。</strong></p>
+                """,
+                "visualizations": [
+                    {
+                        "type": "flourish-horizontal",
+                        "content": """
+                            <p>根据豆瓣数据，观众给《甄嬛传》打出的平均分呈现<strong>持续下降趋势</strong>。在刚刚开播的<strong>2011至2013年间</strong>，这部剧的平均分高达<strong>9.4</strong>分，评论区几乎被各种正面评价占据。然而到了<strong>2024至2025年</strong>，平均分已经下降到<strong>4.5</strong>分。</p>
+                        """,
+                        "embed_code": """
+                            <div class="flourish-embed flourish-chart" data-src="visualisation/25227149">
+                                <script src="https://public.flourish.studio/resources/embed.js"></script>
+                                <noscript>
+                                    <img src="https://public.flourish.studio/visualisation/25227149/thumbnail" width="100%" alt="chart visualization" />
+                                </noscript>
+                            </div>
+                        """
+                    },
+                    {
+                        "type": "html",
+                        "content": """
+                            <div class="compact-text">
+                                <p>与此同时，<strong>观众的评论关键词也发生了明显变化</strong>。</p>
+                                <p>早期的评论以关于角色和剧情相关的讨论为主，而在近几年的评论中，"糟粕""官本位"等词汇开始频繁出现。随着时间推移，质疑的声音逐渐增多：<strong>她真的是"大女主"，还是只是在看似独立的外衣下依然维护着父权秩序？</strong>《甄嬛传》是否体现了真正意义上的女性意识，也开始被许多人重新审视。</p>
+                            </div>
+                        """,
+                        "embed_code": """
+                            <div class="full-width-container">
+                                <iframe src="wordclouds\\interactive_timeline_wordcloud.html" width="100%" height="600" frameborder="0"></iframe>
+                                <div class="data-source">数据来源：豆瓣《甄嬛传》热门短评</div>
+                            </div>
+                        """
+                    }
+                ]
+            },
+            {
+                "id": "data-analysis",
+                "title": "数据里的'大女主'们：独立不应只是人设",
+                "content": """
+                    <div class="full-width-text-container">
+                        <p>不仅是《甄嬛传》，《延禧攻略》《玫瑰的故事》等"爆款"剧集，同样在"大女主"的标签下获得了<strong>两极分化</strong>的评价。有人认为它们展现了女性的坚韧与成长，也有人质疑，这些剧集只是在传统叙事的内核外，为吸引流量披上了"大女主"的外衣。</p>
+                        <p>为了进一步厘清争议，我们选取了八部典型作品（包括《玫瑰的故事》《风吹半夏》《都挺好》《我的前半生》《知否知否》《国色芳华》《延禧攻略》《梦华录》）进行数据分析。</p>
+                    </div>
+                """,
+                "visualizations": [
+                    {
+                        "type": "comparison-vertical",
+                        "content": """
+                            <div class="compact-text">
+                                <p>从高分评价到低分批评的词云对比，可以概括出分歧主要集中的三个方面：<strong>情感线与事业线的比重、女主的主动性、以及关键时刻的"救世主"的角色性别。</strong></p>
+                            </div>
+                        """,
+                        "embed_code": """
+                            <div class="comparison-container-vertical">
+                                <div class="comparison-item-large">
+                                    <h3>正面评价词云</h3>
+                                    <iframe src="recommend_index.html" width="100%" height="700" frameborder="0"></iframe>
+                                </div>
+                                <div class="comparison-item-large">
+                                    <h3>负面评价词云</h3>
+                                    <iframe src="not_index.html" width="100%" height="700" frameborder="0"></iframe>
+                                </div>
+                                <div class="data-source">数据来源：豆瓣《知否知否应是绿肥红瘦》《延禧攻略》《国色芳华》《梦华录》《玫瑰的故事》《我的前半生》《都挺好》《风吹半夏》热门短评</div>
+                            </div>
+                        """
+                    },
+                    {
+                        "type": "flourish-horizontal",
+                        "content": """
+                            <p>根据对八部剧剧情中的爱情线、事业线占比统计，可以看出"大女主"剧的事业线篇幅大多数都明显大于爱情线篇幅，事业线平均占比达到约61%，占据了剧情的主要位置。女性叙事似乎确实突破了传统叙事的藩篱，不再仅落脚在情感方面，而是关注女性自己的事业。可是，仅凭这一点，就能够立起足够有说服力的"大女主"人设吗？</p>
+                        """,
+                        "embed_code": """
+                            <div class="flourish-embed flourish-chart" style="height: 550px;" data-src="visualisation/25231528">
+                                <script src="https://public.flourish.studio/resources/embed.js"></script>
+                                <noscript>
+                                    <img src="https://public.flourish.studio/visualisation/25231528/thumbnail" width="100%" alt="图表可视化" />
+                                </noscript>
+                            </div>
+                        """
+                    },
+                    {
+                        "type": "flourish-horizontal",
+                        "content": """
+                            <p>进一步的数据呈现出一个耐人寻味的现象：</p>
+                            <ul>
+                                <li><strong>在关键情节的推动中，女性角色主动行为明显少于被动行为，多数转折仍依赖男性角色或外部力量，多数情节仍让女性角色随着环境而被动改变，而较少作出主动改变；</strong></li>
+                                <li><strong>女性之间的互助作用依然十分边缘化——在8部作品中，有5部的关键困境情节依靠男性'救世主'推动，而非女性互助或女性自救。女主角在遇到困难时依然被习惯性地被描述成了一个需要由男性主角去"拯救"的对象。</strong></li>
+                            </ul>
+                        """,
+                        "embed_code": """
+                            <div class="flourish-embed flourish-chart-long" data-src="story/3335459">
+                                <script src="https://public.flourish.studio/resources/embed.js"></script>
+                                <noscript>
+                                    <img src="https://public.flourish.studio/story/3335459/thumbnail" width="100%" alt="可视化" />
+                                </noscript>
+                            </div>
+                        """
+                    }
+                ]
+            },
+            {
+                "id": "conclusion",
+                "title": "“大女主”需要有“出走”传统叙事的决心",
+                "content": """
+                    <p>这些数字背后，揭示了"大女主"剧的另一面。虽然它们在市场上被视作女性题材的代表，叙事逻辑似乎也顺应了观众期待的"女人搞事业"这一要求，但在核心价值层面上，女性自主意识的展现依然是十分有限的。换句话说，观众期待中的"独立女性"往往仍然被困在旧有的性别叙事框架之中。</p>
+                    <p>未来，观众或许会期待更多真正意义上的"大女主"作品：不仅仅以女性为主角，更能从女性视角出发，描绘她们在事业、生活与自我实现中的真实挣扎与成长。</p>
+                    <p>正如波伏娃在《第二性》中所写：<strong>"女人不是天生的，而是后天形成的。"</strong>在影视叙事中，女性的形象同样不应被既有框架所限定，而需要在不断的社会讨论与文化表达中被重新搭建，只有在这种持续的碰撞和重塑后，"大女主"才能真正走向真实、走向她们更广阔的天地。</p>
+                """
+            },
+            {
+                "id": "sources",
+                "title": "数据来源",
+                "content": """
+                    <p>1. 豆瓣网友@Evenylu.(北京)整理的2000年至2025年大女主剧片单豆列，<a href="https://www.douban.com/doulist/162596076/" target="_blank">https://www.douban.com/doulist/162596076/</a></p>
+                    <p>2.豆瓣《甄嬛传》热评评分与热门短评，<a href="https://movie.douban.com/subject/4922787/comments?sort=new_score&status=P" target="_blank">https://movie.douban.com/subject/4922787/comments?sort=new_score&status=P</a></p>
+                    <p>3.豆瓣《知否知否应是绿肥红瘦》热门短评，<a href="https://movie.douban.com/subject/26928226/comments?sort=new_score&status=P" target="_blank">https://movie.douban.com/subject/26928226/comments?sort=new_score&status=P</a></p>
+                    <p>4.豆瓣《延禧攻略》热门短评，<a href="https://movie.douban.com/subject/26999852/comments?sort=new_score&status=P" target="_blank">https://movie.douban.com/subject/26999852/comments?sort=new_score&status=P</a></p>
+                    <p>5.豆瓣《国色芳华》热门短评，<a href="https://movie.douban.com/subject/36126283/comments?sort=new_score&status=P" target="_blank">https://movie.douban.com/subject/36126283/comments?sort=new_score&status=P</a></p>
+                    <p>6.豆瓣《梦华录》热门短评，<a href="https://movie.douban.com/subject/35231822/comments?sort=new_score&status=P" target="_blank">https://movie.douban.com/subject/35231822/comments?sort=new_score&status=P</a></p>
+                    <p>7.豆瓣《玫瑰的故事》热门短评，<a href="https://movie.douban.com/subject/35665988/comments?sort=new_score&status=P" target="_blank">https://movie.douban.com/subject/35665988/comments?sort=new_score&status=P</a></p>
+                    <p>8.豆瓣《我的前半生》热门短评，<a href="https://movie.douban.com/subject/26358696/comments?sort=new_score&status=P" target="_blank">https://movie.douban.com/subject/26358696/comments?sort=new_score&status=P</a></p>
+                    <p>9. 豆瓣《都挺好》热门短评，<a href="https://movie.douban.com/subject/27088993/comments?sort=new_score&status=P" target="_blank">https://movie.douban.com/subject/27088993/comments?sort=new_score&status=P</a></p>
+                    <p>10.豆瓣《风吹半夏》 热门短评<a href="https://movie.douban.com/subject/35161592/comments?sort=new_score&status=P" target="_blank">https://movie.douban.com/subject/35161592/comments?sort=new_score&status=P</a></p>
+                    <p>11.基于电视猫所做的人工统计，<a href="https://www.tvmao.com" target="_blank">https://www.tvmao.com</a></p>
+                    <p>12.河豚影视档案与虎嗅《看完3576分钟大热剧后，我们发现女性剧死于"恋爱脑"》<a href="https://m.huxiu.com/article/405602.html" target="_blank">https://m.huxiu.com/article/405602.html</a></p>
+                """
+            }
+        ]
+    },
+    "en": {
+        "title": "Are China's 'Big Heroine' Dramas Really Feminist?",
+        "sections": [
+            {
+                "id": "intro",
+                "title": "Are China's 'Big Heroine' Dramas Really Feminist?",
+                "content": """
+                    <p>&nbsp;</p>
+                    <p>In recent years, with the continuous rise of gender-related discussions, so-called <strong>"strong female lead" dramas (da nü zhu 大女主)</strong> centered on women's growth have become a popular trend in Chinese television. From <strong>Empresses in the Palace (Zhen Huan Zhuan)</strong> and <strong>Story of Yanxi Palace (Yanxi Gonglue)</strong> to <strong>The First Half of My Life</strong> and <strong>The Tale of Rose</strong>, a series of female-centered works have been released and have sparked heated debates across social media platforms.</p>
+                    <p>Yet, with their popularity comes a persistent question: Do these shows—often marketed with <strong>"female awakening"</strong> as their core selling point—actually present new images of women who break tradition and assert independence? Or are they simply recycling outdated narratives dressed in the shiny label of the <strong>"strong female lead"</strong>?</p>
+                    <p>An analysis of nine hit dramas suggests that, behind the glamorous label, women's narrative agency may not be as strong as it appears.</p>
+                """
+            },
+            {
+                "id": "popularity",
+                "title": "The Surge of 'Strong Female Lead' Dramas",
+                "visualizations": [
+                    {
+                        "type": "flourish",
+                        "content": """
+                            <p>Data shows that since 2010, the number of such dramas has steadily increased, with over <strong>50 titles</strong> released so far. After 2020, this trend grew significantly.</p>
+                        """,
+                        "embed_code": """
+                            <div class="flourish-embed flourish-chart" data-src="visualisation/25221254">
+                                <script src="https://public.flourish.studio/resources/embed.js"></script>
+                            </div>
+                        """
+                    },
+                    {
+                        "type": "image",
+                        "content": """
+                            <p>Meanwhile, discussions of the <strong>"strong female lead"</strong> label have skyrocketed across platforms like Weibo, Douyin, and Xiaohongshu. Collectively, related hashtags have accumulated over <strong>10 billion views</strong>, proving the concept's wide appeal.</p>
+                        """,
+                        "image": image_to_base64("tag.jpg"),
+                        "alt": "Social media heat of 'strong female lead' label"
+                    }
+                ]
+            },
+            {
+                "id": "zhenhuan",
+                "title": "Empresses in the Palace: The Phenomenal Case",
+                "content": """
+                    <div class="centered-text">
+                        <p>When it comes to "strong female lead" dramas, <strong>Empresses in the Palace (Zhen Huan Zhuan)</strong> is an unavoidable example. Upon its premiere in 2011, this drama—directed by Zheng Xiaolong and starring Sun Li, Chen Jianbin, and Ada Choi—quickly became a nationwide hit. More than a decade later, it remains a frequent subject of online discussion.</p>
+                        <p>On Douban, the show still maintains a score of <strong>9.3/10</strong>, with more than <strong>400,000</strong> ratings, cementing its reputation as a classic of the genre.</p>
+                    </div>
+                """,
+                "visualizations": [
+                    {
+                        "type": "image",
+                        "content": """
+                            <div class="compact-text">
+                                <p>Empresses in the Palace received extremely high ratings and a large number of reviews on Douban, becoming a phenomenal work.</p>
+                            </div>
+                        """,
+                        "image": image_to_base64(r"甄嬛传豆瓣.png"),
+                        "alt": "Douban rating of Empresses in the Palace"
+                    }
+                ]
+            },
+            {
+                "id": "zhenhuan-question",
+                "title": "Is Empresses in the Palace truly a 'strong female lead' drama?",
+                "content": """
+                    <p>If we track the ratings over time, the picture becomes more complicated.</p>
+                """,
+                "visualizations": [
+                    {
+                        "type": "flourish-horizontal",
+                        "content": """
+                            <p>According to Douban data, the show's average rating has declined steadily. Between <strong>2011 and 2013</strong>, soon after its release, it enjoyed an average score of <strong>9.4</strong>, with overwhelmingly positive reviews. By <strong>2024-2025</strong>, however, the average had dropped to <strong>4.5</strong>.</p>
+                        """,
+                        "embed_code": """
+                            <div class="flourish-embed flourish-chart" data-src="visualisation/25227149">
+                                <script src="https://public.flourish.studio/resources/embed.js"></script>
+                                <noscript>
+                                    <img src="https://public.flourish.studio/visualisation/25227149/thumbnail" width="100%" alt="chart visualization" />
+                                </noscript>
+                            </div>
+                        """
+                    },
+                    {
+                        "type": "html",
+                        "content": """
+                            <div class="compact-text">
+                                <p>At the same time, the keywords in user reviews have shifted dramatically. Early discussions focused on characters and plotlines, while recent reviews increasingly feature words like <strong>"backward"</strong> and <strong>"bureaucratic mindset."</strong></p>
+                                <p>As criticism mounts, audiences are asking: Was Zhen Huan truly a <strong>"strong female lead"</strong>? Or was she, beneath the appearance of independence, still upholding patriarchal order? Whether Empresses in the Palace represents true feminist consciousness is now being re-examined by many.</p>
+                            </div>
+                        """,
+                        "embed_code": """
+                            <div class="full-width-container">
+                                <iframe src="wordclouds\\interactive_timeline_wordcloud.html" width="100%" height="600" frameborder="0"></iframe>
+                                <div class="data-source">Data source: Douban popular short reviews for "Empresses in the Palace"</div>
+                            </div>
+                        """
+                    }
+                ]
+            },
+            {
+                "id": "data-analysis",
+                "title": "Behind the Numbers: Independence as Mere Persona?",
+                "content": """
+                    <div class="full-width-text-container">
+                        <p>The controversy extends beyond Empresses in the Palace. Hit dramas like <strong>Story of Yanxi Palace</strong> and <strong>The Tale of Rose</strong> have also received polarized responses. Some viewers see them as showcasing women's resilience and growth, while others argue that they merely cloak traditional storytelling in the <strong>"strong female lead"</strong> label to attract traffic.</p>
+                        <p>To further clarify, we analyzed eight representative dramas: <strong>The Tale of Rose, Wild Bloom, All Is Well, The First Half of My Life, The Story of Minglan, Beauty at War, Story of Yanxi Palace, and A Dream of Splendor.</strong></p>
+                    </div>
+                """,
+                "visualizations": [
+                    {
+                        "type": "comparison-vertical",
+                        "content": """
+                            <div class="compact-text">
+                                <p>Comparing word clouds from positive and negative reviews, three recurring points of contention emerge: the balance between romance and career storylines, the female lead's degree of initiative, and whether key turning points are driven by male <strong>"saviors."</strong></p>
+                            </div>
+                        """,
+                        "embed_code": """
+                            <div class="comparison-container-vertical">
+                                <div class="comparison-item-large">
+                                    <h3>Positive Reviews Word Cloud</h3>
+                                    <iframe src="recommend_index.html" width="100%" height="700" frameborder="0"></iframe>
+                                </div>
+                                <div class="comparison-item-large">
+                                    <h3>Negative Reviews Word Cloud</h3>
+                                    <iframe src="not_index.html" width="100%" height="700" frameborder="0"></iframe>
+                                </div>
+                                <div class="data-source">Data source: Douban popular short reviews for "The Story of Minglan", "Story of Yanxi Palace", "Beauty at War", "A Dream of Splendor", "The Tale of Rose", "The First Half of My Life", "All Is Well", and "Wild Bloom"</div>
+                            </div>
+                        """
+                    },
+                    {
+                        "type": "flourish-horizontal",
+                        "content": """
+                            <p>Based on our data, career storylines occupy the majority of narrative space: on average, <strong>61%</strong> of screen time compared to romance. This suggests that women's stories are no longer confined to love and relationships but also highlight career development. Yet, is this shift alone enough to establish a truly convincing <strong>"strong female lead"</strong>?</p>
+                        """,
+                        "embed_code": """
+                            <div class="flourish-embed flourish-chart" style="height: 550px;" data-src="visualisation/25231528">
+                                <script src="https://public.flourish.studio/resources/embed.js"></script>
+                                <noscript>
+                                    <img src="https://public.flourish.studio/visualisation/25231528/thumbnail" width="100%" alt="chart visualization" />
+                                </noscript>
+                            </div>
+                        """
+                    },
+                    {
+                        "type": "flourish-horizontal",
+                        "content": """
+                            <p>Digging deeper, the data reveals striking patterns:</p>
+                            <ul>
+                                <li>In crucial plot developments, female characters exhibit <strong>more passive than active behavior</strong>. Most turning points still rely on male characters or external forces.</li>
+                                <li>Women are often shown <strong>adapting to circumstances rather than initiating change</strong>.</li>
+                                <li>Female solidarity remains marginalized: in <strong>5 of the 8 dramas</strong>, women's crises are resolved by male saviors rather than female alliances or self-reliance.</li>
+                            </ul>
+                            <p>The female protagonist is frequently framed as someone in need of rescue by male characters.</p>
+                        """,
+                        "embed_code": """
+                            <div class="flourish-embed flourish-chart-long" data-src="story/3335459">
+                                <script src="https://public.flourish.studio/resources/embed.js"></script>
+                                <noscript>
+                                    <img src="https://public.flourish.studio/story/3335459/thumbnail" width="100%" alt="visualization" />
+                                </noscript>
+                            </div>
+                        """
+                    }
+                ]
+            },
+            {
+                "id": "conclusion",
+                "title": "Stepping into the Horizons of True Feminism",
+                "content": """
+                    <p>These numbers highlight another side of the "strong female lead" phenomenon. On the surface, these dramas are celebrated as representations of women's empowerment. Their narratives appear to cater to audience expectations of <strong>"women pursuing careers."</strong> Yet, at a deeper level, their core values still show limited expression of true female agency.</p>
+                    <p>In other words, the <strong>"independent women"</strong> that audiences hope to see often remain trapped within traditional gendered storytelling.</p>
+                    <p>Looking ahead, audiences may expect more authentic <strong>"strong female lead"</strong> dramas—not just those with women as central characters, but ones told from female perspectives, portraying their struggles and growth in both career and personal life.</p>
+                    <p>As Simone de Beauvoir wrote in <strong>The Second Sex</strong>: <strong>"One is not born, but rather becomes, a woman."</strong> Similarly, in media narratives, women's images should not be confined by preexisting frameworks but continually reshaped through social debate and cultural expression. Only through this ongoing process can the <strong>"strong female lead"</strong> truly step into authenticity—and onto a broader stage.</p>
+                """
+            },
+            {
+                "id": "sources",
+                "title": "Data Sources",
+                "content": """
+                    <p>1. Douban user @Evenylu. (Beijing)'s list of "Big Heroine" dramas from 2000 to 2025, <a href="https://www.douban.com/doulist/162596076/" target="_blank">https://www.douban.com/doulist/162596076/</a></p>
+                    <p>2. Douban hot reviews and popular short reviews for "Empresses in the Palace", <a href="https://movie.douban.com/subject/4922787/comments?sort=new_score&status=P" target="_blank">https://movie.douban.com/subject/4922787/comments?sort=new_score&status=P</a></p>
+                    <p>3. Douban popular short reviews for "The Story of Minglan", <a href="https://movie.douban.com/subject/26928226/comments?sort=new_score&status=P" target="_blank">https://movie.douban.com/subject/26928226/comments?sort=new_score&status=P</a></p>
+                    <p>4. Douban popular short reviews for "Story of Yanxi Palace", <a href="https://movie.douban.com/subject/26999852/comments?sort=new_score&status=P" target="_blank">https://movie.douban.com/subject/26999852/comments?sort=new_score&status=P</a></p>
+                    <p>5. Douban popular short reviews for "Beauty at War", <a href="https://movie.douban.com/subject/36126283/comments?sort=new_score&status=P" target="_blank">https://movie.douban.com/subject/36126283/comments?sort=new_score&status=P</a></p>
+                    <p>6. Douban popular short reviews for "A Dream of Splendor", <a href="https://movie.douban.com/subject/35231822/comments?sort=new_score&status=P" target="_blank">https://movie.douban.com/subject/35231822/comments?sort=new_score&status=P</a></p>
+                    <p>7. Douban popular short reviews for "The Tale of Rose", <a href="https://movie.douban.com/subject/35665988/comments?sort=new_score&status=P" target="_blank">https://movie.douban.com/subject/35665988/comments?sort=new_score&status=P</a></p>
+                    <p>8. Douban popular short reviews for "The First Half of My Life", <a href="https://movie.douban.com/subject/26358696/comments?sort=new_score&status=P" target="_blank">https://movie.douban.com/subject/26358696/comments?sort=new_score&status=P</a></p>
+                    <p>9. Douban popular short reviews for "All Is Well", <a href="https://movie.douban.com/subject/27088993/comments?sort=new_score&status=P" target="_blank">https://movie.douban.com/subject/27088993/comments?sort=new_score&status=P</a></p>
+                    <p>10. Douban popular short reviews for "Wild Bloom", <a href="https://movie.douban.com/subject/35161592/comments?sort=new_score&status=P" target="_blank">https://movie.douban.com/subject/35161592/comments?sort=new_score&status=P</a></p>
+                    <p>11. Manual statistics based on TVMao, <a href="https://www.tvmao.com" target="_blank">https://www.tvmao.com</a></p>
+                    <p>12. Hetun Film & TV Archive and Huxiu article "After watching 3576 minutes of hit dramas, we found that female dramas die from 'love brain'", <a href="https://m.huxiu.com/article/405602.html" target="_blank">https://m.huxiu.com/article/405602.html</a></p>
+                """
+            }
+        ]
+    }
+}
+
+# HTML模板（支持中英双语切换）
+html_template = """
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ zh.title }} / {{ en.title }}</title>
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+        
+        /* Chapter styles */
+        .chapter {
+            min-height: 100vh;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        
+        .chapter:first-child {
+            min-height: 100vh;
+            padding-bottom: 15px;
+        }
+        
+        .chapter:nth-child(2) {
+            margin-top: 50px;
+        }
+        
+        .chapter-container {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .chapter-title {
+            font-size: 3.5rem;
+            margin-bottom: 40px;
+            color: #d14f6d;
+            text-align: left;
+            width: 100%;
+        }
+        
+        .chapter:not(:first-child) .chapter-title {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .chapter-content {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: left;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .chapter-content p {
+            margin-bottom: 1.0em; /* 减小段落间距 */
+        }
+        
+        /* 增加第五和第六section的段落间距 */
+        #data-analysis .chapter-content p,
+        #conclusion .chapter-content p {
+            margin-bottom: 2.5em; /* 增加段间距 */
+        }
+        
+        /* Centered text container */
+        .centered-text {
+            text-align: center;
+            margin: 0 auto;
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .centered-text p {
+            text-align: left;
+            margin-bottom: 1em;
+        }
+        
+        /* Full width text container for data-analysis section */
+        .full-width-text-container {
+            width: 100%;
+            max-width: 100%;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        
+        /* Compact text for specific sections */
+        .compact-text p {
+            margin-bottom: 0.5em;
+            line-height: 1.5;
+        }
+        
+        /* Center content */
+        .center-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        
+        /* Full width container for word clouds */
+        .full-width-container {
+            width: 100%;
+            margin: 20px 0;
+        }
+        
+        /* Scrolly container - only for the second section */
+        .scrolly-container {
+            position: relative;
+            width: 100%;
+            height: 90vh;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .scrolly-items {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .scrolly-item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: transform 0.8s ease, opacity 0.8s ease;
+        }
+        
+        .scrolly-item.active {
+            opacity: 1;
+            transform: translateY(0);
+            z-index: 10;
+        }
+        
+        .scrolly-item.prev {
+            transform: translateY(-100%);
+        }
+        
+        .viz-container {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .text-container {
+            flex: 1;
+            padding: 0 30px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: left;
+        }
+        
+        .text-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid #d14f6d;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: transform 0.8s ease, opacity 0.8s ease;
+            text-align: left; /* 确保文字向左对齐 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 垂直居中 */
+        }
+        
+        .text-content p {
+            margin-bottom: 1em;
+        }
+        
+        .scrolly-item.active .text-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .flourish-embed {
+            width: 100%;
+            height: 450px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .flourish-embed.flourish-chart-long {
+            height: 700px;
+        }
+        
+        .viz-image {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Regular visualization container styles */
+        .visualization-container {
+            width: 100%;
+            margin: 20px 0;
+        }
+        
+        .visualization-item {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .visualization-item-narrow {
+            max-width: 700px;
+            margin: 0 auto 20px;
+        }
+        
+        .visualization-item h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #d14f6d;
+        }
+        
+        /* Vertical comparison container styles */
+        .comparison-container-vertical {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        /* Horizontal comparison container styles */
+        .comparison-container-horizontal {
+            display: flex;
+            width: 100%;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .comparison-item {
+            flex: 1;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        /* Larger container for word clouds */
+        .comparison-item-large {
+            flex: 1;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            height: 800px;
+            width: 100%;
+        }
+        
+        .comparison-item-large iframe {
+            height: 750px;
+            width: 100%;
+        }
+        
+        .comparison-item h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #d14f6d;
+        }
+        
+        /* Special styles for fifth section */
+        #data-analysis .comparison-container-horizontal .text-content {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        #data-analysis .comparison-container-horizontal .text-content p,
+        #data-analysis .comparison-container-horizontal .text-content ul {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        
+        #data-analysis .comparison-container-horizontal .text-content ul {
+            padding-left: 20px;
+        }
+        
+        #data-analysis .comparison-container-horizontal .text-content li {
+            margin-bottom: 8px;
+        }
+        
+        /* Data source annotation style */
+        .data-source {
+            color: #888;
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        
+        /* Sources section styles */
+        .sources-section .chapter-title {
+            color: #888;
+            font-size: 1.4rem; /* 调小标题字体 */
+        }
+        
+        .sources-section .chapter-content {
+            color: #888;
+            font-size: 0.9rem; /* 调小内容字体 */
+        }
+        
+        .sources-section .chapter-content a {
+            color: #666;
+            text-decoration: underline;
+        }
+        
+        /* Navigation dots */
+        .scrolly-dots {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(209, 79, 109, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active {
+            background-color: #d14f6d;
+            transform: scale(1.3);
+        }
+        
+        /* Scroll hint */
+        .scroll-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #888;
+            font-size: 0.9rem;
+            z-index: 999;
+        }
+        
+        .scroll-hint i {
+            margin-bottom: 5px;
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .chapter-container {
+                max-width: 800px;
+            }
+            
+            .chapter-content {
+                max-width: 700px;
+            }
+            
+            .chapter-title {
+                font-size: 3rem;
+            }
+            
+            .chapter:not(:first-child) .chapter-title {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .chapter-container {
+                max-width: 700px;
+            }
+            
+            .chapter-content {
+                max-width: 600px;
+            }
+            
+            .chapter-title {
+                font-size: 2.5rem;
+            }
+            
+            .chapter:not(:first-child) .chapter-title {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .chapter-title {
+                font-size: 2.2rem;
+            }
+            
+            .chapter:not(:first-child) .chapter-title {
+                font-size: 1.6rem;
+            }
+            
+            .chapter-container {
+                max-width: 100%;
+                padding: 0 15px;
+            }
+            
+            .chapter-content {
+                max-width: 100%;
+            }
+            
+            .scrolly-item {
+                flex-direction: column;
+            }
+            
+            .viz-container, .text-container {
+                flex: none;
+                width: 100%;
+                padding: 0 10px;
+            }
+            
+            .flourish-embed {
+                height: 350px;
+            }
+            
+            .flourish-embed.flourish-chart-long {
+                height: 500px;
+            }
+            
+            .viz-image {
+                max-height: 300px;
+            }
+            
+            .scrolly-dots {
+                top: auto;
+                bottom: 10px;
+                right: 50%;
+                transform: translateX(50%);
+                flex-direction: row;
+            }
+            
+            .comparison-container-horizontal {
+                flex-direction: column;
+            }
+            
+            .comparison-item-large {
+                height: 600px;
+            }
+            
+            .comparison-item-large iframe {
+                height: 550px;
+            }
+            
+            #data-analysis .comparison-container-horizontal .text-content {
+                text-align: center;
+            }
+            
+            #data-analysis .comparison-container-horizontal .text-content p,
+            #data-analysis .comparison-container-horizontal .text-content ul {
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .chapter-title {
+                font-size: 1.8rem;
+            }
+            
+            .chapter:not(:first-child) .chapter-title {
+                font-size: 1.4rem;
+            }
+            
+            .chapter-content {
+                font-size: 1.1rem;
+            }
+            
+            .comparison-item-large {
+                height: 500px;
+                padding: 15px;
+            }
+            
+            .comparison-item-large iframe {
+                height: 450px;
+            }
+        }
+        
+        /* Language switcher styles */
+        .lang-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: #d14f6d;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .lang-switcher:hover {
+            background-color: #b83d5a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+        }
+        
+        .lang-switcher i {
+            font-size: 16px;
+        }
+        
+        /* Language content container */
+        .lang-content {
+            display: none;
+        }
+        
+        .lang-content.active {
+            display: block;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .lang-switcher {
+                top: 15px;
+                right: 15px;
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <!-- Language switcher -->
+    <button class="lang-switcher" id="langToggle">
+        <i class="fas fa-globe"></i>
+        <span id="langText">English</span>
+    </button>
+
+    <!-- Chinese content -->
+    <div class="lang-content active" id="zh-content">
+        {% for section in zh.sections %}
+        <section class="chapter" id="{{ section.id }}">
+            <div class="chapter-container {% if section.id == 'sources' %}sources-section{% endif %}">
+                <h2 class="chapter-title">{{ section.title }}</h2>
+                
+                {% if section.content %}
+                <div class="chapter-content">
+                    {{ section.content }}
+                </div>
+                {% endif %}
+                
+                {% if section.visualizations %}
+                    {% if section.id == 'popularity' %}
+                    <!-- Second section with scrollable content -->
+                    <div class="scrolly-container">
+                        <div class="scrolly-items">
+                            {% for viz in section.visualizations %}
+                            <div class="scrolly-item {% if loop.first %}active{% endif %}" data-index="{{ loop.index0 }}">
+                                <div class="viz-container">
+                                    {% if viz.type == 'flourish' %}
+                                    {{ viz.embed_code }}
+                                    {% elif viz.type == 'image' %}
+                                    <img src="{{ viz.image }}" alt="{{ viz.alt }}" class="viz-image">
+                                    {% endif %}
+                                </div>
+                                <div class="text-container">
+                                    <div class="text-content">
+                                        {{ viz.content }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="scrolly-dots">
+                            {% for viz in section.visualizations %}
+                            <div class="dot {% if loop.first %}active{% endif %}" data-index="{{ loop.index0 }}"></div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% else %}
+                    <!-- Other sections with regular layout -->
+                    <div class="visualization-container">
+                        {% for viz in section.visualizations %}
+                            {% if viz.type == 'comparison-vertical' %}
+                            <!-- Vertically arranged word cloud comparison -->
+                            <div class="comparison-container-vertical">
+                                {{ viz.embed_code }}
+                                <div class="text-content">
+                                    {{ viz.content }}
+                                </div>
+                            </div>
+                            {% elif viz.type == 'flourish-horizontal' %}
+                            <!-- Horizontally arranged charts and text -->
+                            <div class="comparison-container-horizontal">
+                                <div class="comparison-item">
+                                    {{ viz.embed_code }}
+                                </div>
+                                <div class="comparison-item">
+                                    <div class="text-content">
+                                        {{ viz.content }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <!-- Default layout -->
+                            <div class="visualization-item {% if section.id == 'zhenhuan' or section.id == 'zhenhuan-question' %}visualization-item-narrow{% endif %}">
+                                {% if viz.type == 'html' %}
+                                {{ viz.embed_code }}
+                                {% elif viz.type == 'image' %}
+                                <img src="{{ viz.image }}" alt="{{ viz.alt }}" class="viz-image">
+                                {% elif viz.type == 'flourish' %}
+                                {{ viz.embed_code }}
+                                {% endif %}
+                                <div class="text-content">
+                                    {{ viz.content }}
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+            
+            {% if loop.first %}
+            <div class="scroll-hint">
+                <i class="fas fa-chevron-down"></i>
+                <span>向下滚动</span>
+            </div>
+            {% endif %}
+        </section>
+        {% endfor %}
+    </div>
+
+    <!-- English content -->
+    <div class="lang-content" id="en-content">
+        {% for section in en.sections %}
+        <section class="chapter" id="{{ section.id }}">
+            <div class="chapter-container {% if section.id == 'sources' %}sources-section{% endif %}">
+                <h2 class="chapter-title">{{ section.title }}</h2>
+                
+                {% if section.content %}
+                <div class="chapter-content">
+                    {{ section.content }}
+                </div>
+                {% endif %}
+                
+                {% if section.visualizations %}
+                    {% if section.id == 'popularity' %}
+                    <!-- Second section with scrollable content -->
+                    <div class="scrolly-container">
+                        <div class="scrolly-items">
+                            {% for viz in section.visualizations %}
+                            <div class="scrolly-item {% if loop.first %}active{% endif %}" data-index="{{ loop.index0 }}">
+                                <div class="viz-container">
+                                    {% if viz.type == 'flourish' %}
+                                    {{ viz.embed_code }}
+                                    {% elif viz.type == 'image' %}
+                                    <img src="{{ viz.image }}" alt="{{ viz.alt }}" class="viz-image">
+                                    {% endif %}
+                                </div>
+                                <div class="text-container">
+                                    <div class="text-content">
+                                        {{ viz.content }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="scrolly-dots">
+                            {% for viz in section.visualizations %}
+                            <div class="dot {% if loop.first %}active{% endif %}" data-index="{{ loop.index0 }}"></div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% else %}
+                    <!-- Other sections with regular layout -->
+                    <div class="visualization-container">
+                        {% for viz in section.visualizations %}
+                            {% if viz.type == 'comparison-vertical' %}
+                            <!-- Vertically arranged word cloud comparison -->
+                            <div class="comparison-container-vertical">
+                                {{ viz.embed_code }}
+                                <div class="text-content">
+                                    {{ viz.content }}
+                                </div>
+                            </div>
+                            {% elif viz.type == 'flourish-horizontal' %}
+                            <!-- Horizontally arranged charts and text -->
+                            <div class="comparison-container-horizontal">
+                                <div class="comparison-item">
+                                    {{ viz.embed_code }}
+                                </div>
+                                <div class="comparison-item">
+                                    <div class="text-content">
+                                        {{ viz.content }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+                            <!-- Default layout -->
+                            <div class="visualization-item {% if section.id == 'zhenhuan' or section.id == 'zhenhuan-question' %}visualization-item-narrow{% endif %}">
+                                {% if viz.type == 'html' %}
+                                {{ viz.embed_code }}
+                                {% elif viz.type == 'image' %}
+                                <img src="{{ viz.image }}" alt="{{ viz.alt }}" class="viz-image">
+                                {% elif viz.type == 'flourish' %}
+                                {{ viz.embed_code }}
+                                {% endif %}
+                                <div class="text-content">
+                                    {{ viz.content }}
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+            
+            {% if loop.first %}
+            <div class="scroll-hint">
+                <i class="fas fa-chevron-down"></i>
+                <span>Scroll Down</span>
+            </div>
+            {% endif %}
+        </section>
+        {% endfor %}
+    </div>
+
+    <script>
+        // Language switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const langToggle = document.getElementById('langToggle');
+            const langText = document.getElementById('langText');
+            const zhContent = document.getElementById('zh-content');
+            const enContent = document.getElementById('en-content');
+            
+            // Default language is Chinese
+            let currentLang = 'zh';
+            
+            // Toggle language function
+            function toggleLanguage() {
+                if (currentLang === 'zh') {
+                    // Switch to English
+                    zhContent.classList.remove('active');
+                    enContent.classList.add('active');
+                    langText.textContent = '中文';
+                    currentLang = 'en';
+                    
+                    // Reinitialize event listeners for English version
+                    initializeEventListeners('en');
+                } else {
+                    // Switch to Chinese
+                    enContent.classList.remove('active');
+                    zhContent.classList.add('active');
+                    langText.textContent = 'English';
+                    currentLang = 'zh';
+                    
+                    // Reinitialize event listeners for Chinese version
+                    initializeEventListeners('zh');
+                }
+            }
+            
+            // Bind click event
+            langToggle.addEventListener('click', toggleLanguage);
+            
+            // Initialize event listeners based on current language
+            function initializeEventListeners(lang) {
+                const content = lang === 'zh' ? zhContent : enContent;
+                
+                // Scroll hint hide logic
+                window.addEventListener('scroll', function() {
+                    const scrollHint = content.querySelector('.scroll-hint');
+                    if (scrollHint && window.scrollY > 200) {
+                        scrollHint.style.opacity = '0';
+                    } else if (scrollHint) {
+                        scrollHint.style.opacity = '1';
+                    }
+                });
+                
+                // Second section scroll switching logic
+                const scrollyContainer = content.querySelector('#popularity .scrolly-container');
+                if (scrollyContainer) {
+                    const items = scrollyContainer.querySelectorAll('.scrolly-item');
+                    const dots = scrollyContainer.querySelectorAll('.dot');
+                    let currentIndex = 0;
+                    let prevIndex = 0;
+                    
+                    // Click on navigation dots to switch content
+                    dots.forEach(dot => {
+                        dot.addEventListener('click', function() {
+                            const index = parseInt(this.getAttribute('data-index'));
+                            showItem(index);
+                        });
+                    });
+                    
+                    // Mouse wheel switching
+                    scrollyContainer.addEventListener('wheel', function(e) {
+                        e.preventDefault();
+                        
+                        if (e.deltaY > 0) {
+                            showItem((currentIndex + 1) % items.length);
+                        } else {
+                            showItem((currentIndex - 1 + items.length) % items.length);
+                        }
+                    });
+                    
+                    // Touch swipe switching
+                    let touchStartY = 0;
+                    scrollyContainer.addEventListener('touchstart', function(e) {
+                        touchStartY = e.touches[0].clientY;
+                    });
+                    
+                    scrollyContainer.addEventListener('touchend', function(e) {
+                        const touchEndY = e.changedTouches[0].clientY;
+                        const diffY = touchStartY - touchEndY;
+                        
+                        if (Math.abs(diffY) > 50) {
+                            if (diffY > 0) {
+                                showItem((currentIndex + 1) % items.length);
+                            } else {
+                                showItem((currentIndex - 1 + items.length) % items.length);
+                            }
+                        }
+                    });
+                    
+                    function showItem(index) {
+                        if (index === currentIndex) return;
+                        
+                        prevIndex = currentIndex;
+                        currentIndex = index;
+                        
+                        items[prevIndex].classList.remove('active');
+                        items[prevIndex].classList.add('prev');
+                        dots[prevIndex].classList.remove('active');
+                        
+                        items[currentIndex].classList.remove('prev');
+                        items[currentIndex].classList.add('active');
+                        dots[currentIndex].classList.add('active');
+                    }
+                }
+                
+                // Scroll animation effects
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.1
+                };
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    });
+                }, observerOptions);
+                
+                content.querySelectorAll('.text-content').forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(20px)';
+                    el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    observer.observe(el);
+                });
+            }
+            
+            // Initialize event listeners for default language
+            initializeEventListeners('zh');
+        });
+    </script>
+</body>
+</html>
+"""
+
+# Create HTML file
+def create_html_page(data, output_path="bilingual_big_heroine.html"):
+    template = Template(html_template)
+    html_content = template.render(
+        zh=data["zh"],
+        en=data["en"]
+    )
+    
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(html_content)
+    
+    print(f"Bilingual page generated: {output_path}")
+
+# Main function
+def main():
+    create_html_page(page_data)
+    print("Bilingual data news page created successfully!")
+    print("Please upload the generated HTML file to a web server or run it with a local server")
+
+if __name__ == "__main__":
+    main()
